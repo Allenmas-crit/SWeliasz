@@ -15,7 +15,7 @@ char daysOfWeek[7][12] = {
 void setup () {
   Serial.begin(9600);
 
-  // SETUP RTC MODULE
+  // start
   if (! rtc.begin()) {
     Serial.println("RTC nie znaleziono");
     Serial.flush();
