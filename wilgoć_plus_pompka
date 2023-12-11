@@ -1,22 +1,20 @@
-// Arduino soil moisture sensor code
-
-// declare variables for pins
+// deklaracja zmiennych dla pinów
 const int sensorpin = A0;
 const int sensorpower = 8;
 const int pumppin = 11;
 
-// variable for sensor reading
+// zmienna do odczytu czujnika
 int sensor;
 
-// delay time between sensor readings (milliseconds)
+// czas opóźnienia między odczytami czujnika
 const int delayTime = 1000;  // Delay zwiększony na jedną sekundę
 
-// "wet" and "dry" thresholds - these require calibration
-int wet = 800;
-int dry = 500;
+// "wet" and "dry" progi - wymagają ustawienia
+int wet = 900;
+int dry = 600;
 
 void setup() { // code that only runs once
-  // set pins as outputs
+  // ustaw piny jako wyjścia
   pinMode(sensorpower, OUTPUT);
   pinMode(pumppin, OUTPUT);
   
@@ -24,24 +22,24 @@ void setup() { // code that only runs once
   Serial.begin(9600);
 }
 
-void loop() { // code that loops forever
-  // power on sensor and wait briefly
+void loop() { 
+  // włączyć czujnik i odczekać chwilę
   digitalWrite(sensorpower, HIGH);
   delay(10);
   
-  // take reading from sensor
+  // odczyt z czujnika
   sensor = analogRead(sensorpin);
   
-  // turn sensor off to help prevent corrosion
+  // wyłącz czujnik, aby zapobiec korozji
   digitalWrite(sensorpower, LOW);
   
-  // print sensor reading
+  // wydruk odczytu czujnika
   Serial.println(sensor);
   
-  // If sensor reading is greater than "wet" threshold,
-  // turn on the pump. If it is less than the "dry"
-  // threshold, turn on the pump. 
-  // If it is in between the two values, do nothing.
+  // Jeśli odczyt czujnika jest większy niż próg "wet",
+  // włączyć pompę. Jeśli jest mniejszy niż próg "dry"
+  // próg, włącz pompę. 
+  // Jeśli jest pomiędzy tymi dwiema wartościami, nie rób nic.
   if (sensor > wet || sensor < dry) {
     digitalWrite(pumppin, HIGH);
   } else {
